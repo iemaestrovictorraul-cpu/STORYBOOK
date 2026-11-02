@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storybook Comunicación - I.E. N° 0148 Maestro Víctor Raúl Haya de la Torre</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ie: {
+                            red: '#C8102E',
+                            darkred: '#8B0000',
+                            gold: '#D97706',
+                            goldlight: '#FEF3C7',
+                            green: '#15803D',
+                            cream: '#FAF7F2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        title: ['Fredoka', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .bg-pattern-light {
+            background-color: #F8F5EE;
+            background-image: radial-gradient(#E2DACA 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .bg-pattern-dark {
+            background-color: #121826;
+            background-image: radial-gradient(#2A3447 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Institutional Peruvian Pattern Bar */
+        .ie-top-bar {
+            background: repeating-linear-gradient(
+                90deg,
+                #C8102E 0px,
+                #C8102E 25px,
+                #FFFFFF 25px,
+                #FFFFFF 35px,
+                #C8102E 35px,
+                #C8102E 60px,
+                #D97706 60px,
+                #D97706 70px
+            );
+            height: 6px;
+        }
+
+        /* Interactive Terms */
+        .glossary-term {
+            border-bottom: 2px dashed #C8102E;
+            color: #991B1B;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0 3px;
+            background-color: rgba(254, 226, 226, 0.5);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .dark .glossary-term {
+            color: #FCA5A5;
+            border-color: #EF4444;
+            background-color: rgba(127, 29, 29, 0.4);
+        }
+        .glossary-term:hover {
+            background-color: #FCA5A5;
+            color: #7F1D1D;
+            transform: translateY(-1px);
+        }
+
+        /* Highlighting Classes */
+        .hl-yellow {
+            background-color: #FEF08A !important;
+            color: #713F12 !important;
+            border-radius: 3px;
+            padding: 2px 4px;
+        }
+        .hl-green {
+            background-color: #BBF7D0 !important;
+            color: #14532D !important;
+            border-radius: 3px;
+            padding: 2px 4px;
+        }
+        .hl-blue {
+            background-color: #BAE6FD !important;
+            color: #0C4A6E !important;
+            border-radius: 3px;
+            padding: 2px 4px;
+        }
+
+        /* Animations */
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        .animate-float {
+            animation: float-subtle 3s ease-in-out infinite;
+        }
+
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Printable Diploma CSS */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate-container, #printable-certificate-container * {
+                visibility: visible;
+            }
+            #printable-certificate-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white !important;
+                color: black !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body id="app-body" class="bg-pattern-light text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans selection:bg-red-200 selection:text-red-900">
+
+    <!-- Top Flag Bar -->
+    <div class="ie-top-bar"></div>
+
+    <!-- MAIN APP HEADER -->
+    <header class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+            
+            <!-- School Emblem + Branding -->
+            <div class="flex items-center gap-3">
+                <!-- Vector SVG Emblem of I.E. 0148 MVRHT -->
+                <div class="w-12 h-14 shrink-0 transition-transform hover:scale-105 cursor-pointer" onclick="scrollToTop()" title="I.E. N° 0148 Maestro Víctor Raúl Haya de la Torre">
+                    <svg viewBox="0 0 200 240" class="w-full h-full drop-shadow-md">
+                        <!-- Outer Shield White Base -->
+                        <path d="M 10 10 L 190 10 L 190 140 C 190 190 100 230 100 230 C 100 230 10 190 10 140 Z" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="4"/>
+                        <!-- Top Red-White-Red Banner -->
+                        <rect x="20" y="20" width="53" height="30" fill="#C8102E"/>
+                        <rect x="73" y="20" width="54" height="30" fill="#FFFFFF"/>
+                        <rect x="127" y="20" width="53" height="30" fill="#C8102E"/>
+                        <text x="46" y="42" font-family="Fredoka, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" text-anchor="middle">I</text>
+                        <text x="153" y="42" font-family="Fredoka, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" text-anchor="middle">E</text>
+                        <!-- Main Shield Red Field -->
+                        <path d="M 20 53 L 180 53 L 180 135 C 180 178 100 215 100 215 C 100 215 20 178 20 135 Z" fill="#C8102E"/>
+                        <!-- Arc Text MVRHT -->
+                        <path id="arc-path" d="M 40 85 Q 100 60 160 85" fill="none"/>
+                        <text font-family="Fredoka, sans-serif" font-weight="900" font-size="20" fill="#000000">
+                            <textPath href="#arc-path" startOffset="50%" text-anchor="middle">MVRHT</textPath>
+                        </text>
+                        <!-- Map of Peru White Outline -->
+                        <path d="M 85 85 C 95 80 115 85 125 95 C 130 110 120 120 125 135 C 115 150 105 155 95 150 C 85 140 75 115 85 85 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+                        <text x="102" y="105" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">1</text>
+                        <text x="102" y="123" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">4</text>
+                        <text x="102" y="141" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">8</text>
+                        <!-- Laurel Wreaths Green -->
+                        <path d="M 35 140 C 35 170 70 190 100 195 C 130 190 165 170 165 140" fill="none" stroke="#15803D" stroke-width="7" stroke-linecap="round"/>
+                        <!-- Bottom S.J.L. Text -->
+                        <text x="100" y="185" font-family="Fredoka, sans-serif" font-weight="900" font-size="14" fill="#FFFFFF" text-anchor="middle">S.J.L.</text>
+                    </svg>
+                </div>
+
+                <!-- Text Titles -->
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300 uppercase tracking-wide border border-red-200 dark:border-red-800">
+                            I.E. N° 0148
+                        </span>
+                        <span class="text-xs font-bold text-amber-700 dark:text-amber-400 hidden sm:inline">
+                            <i class="fa-solid fa-laptop-code"></i> AIP Secundaria 2026
+                        </span>
+                    </div>
+                    <h1 class="font-title text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                        Maestro Víctor Raúl Haya de la Torre
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-book-bookmark text-red-600"></i> Área de Comunicación • San Juan de Lurigancho
+                    </p>
+                </div>
+            </div>
+
+            <!-- Gamification & Utility Controls -->
+            <div class="flex items-center gap-2.5">
+                
+                <!-- Learning Stars -->
+                <div class="flex items-center gap-1.5 bg-amber-50 dark:bg-slate-800 border border-amber-300 dark:border-amber-500/40 rounded-full px-3.5 py-1.5 shadow-inner" title="Puntos acumulados">
+                    <i class="fa-solid fa-star text-amber-500 text-base animate-pulse"></i>
+                    <span id="star-counter" class="font-title font-bold text-base text-amber-900 dark:text-amber-300">0</span>
+                    <span class="text-[11px] text-amber-800 dark:text-amber-400 font-bold uppercase hidden md:inline">Pts</span>
+                </div>
+
+                <!-- Theme Toggle (Light/Dark Mode) -->
+                <button onclick="toggleDarkMode()" id="theme-btn" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Cambiar Modo Lectura">
+                    <i class="fa-solid fa-moon text-sm"></i>
+                </button>
+
+                <!-- Font Resizer -->
+                <div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+                    <button onclick="changeFontSize(-1)" class="w-7 h-7 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm flex items-center justify-center hover:bg-slate-50 font-bold text-xs" title="Disminuir letra">A-</button>
+                    <button onclick="changeFontSize(1)" class="w-7 h-7 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm flex items-center justify-center hover:bg-slate-50 font-bold text-sm" title="Aumentar letra">A+</button>
+                </div>
+
+                <!-- Sound FX Toggle -->
+                <button id="sound-btn" onclick="toggleSound()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-red-100 hover:text-red-700 transition" title="Sonido FX">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- CHAPTER NAVIGATION PIPELINE -->
+        <div class="bg-red-50/80 dark:bg-slate-950/80 border-t border-red-100 dark:border-slate-800 py-2 px-4 transition-colors">
+            <div class="max-w-4xl mx-auto flex items-center justify-between text-xs font-title font-bold">
+                
+                <button onclick="switchChapter(0)" id="nav-chap-0" class="chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-600 text-white shadow-sm transition">
+                    <span class="w-4 h-4 rounded-full bg-red-900/40 flex items-center justify-center text-[10px]">1</span>
+                    <span>Cap. 1: Costa</span>
+                </button>
+
+                <div class="h-0.5 flex-1 bg-red-200 dark:bg-slate-800 mx-2"></div>
+
+                <button onclick="switchChapter(1)" id="nav-chap-1" class="chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-red-200 transition">
+                    <span class="w-4 h-4 rounded-full bg-slate-400/50 flex items-center justify-center text-[10px]">2</span>
+                    <span>Cap. 2: Sierra</span>
+                </button>
+
+                <div class="h-0.5 flex-1 bg-red-200 dark:bg-slate-800 mx-2"></div>
+
+                <button onclick="switchChapter(2)" id="nav-chap-2" class="chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-red-200 transition">
+                    <span class="w-4 h-4 rounded-full bg-slate-400/50 flex items-center justify-center text-[10px]">3</span>
+                    <span>Cap. 3: Selva</span>
+                </button>
+
+                <div class="h-0.5 flex-1 bg-red-200 dark:bg-slate-800 mx-2"></div>
+
+                <button onclick="openCertificate()" id="nav-chap-3" class="chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 transition">
+                    <i class="fa-solid fa-award text-emerald-600"></i>
+                    <span class="hidden sm:inline">Diploma AIP</span>
+                </button>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP LAYOUT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT SIDEBAR: INSTITUTIONAL CARD & HIGHLIGHTER TOOL -->
+        <aside class="lg:col-span-4 flex flex-col gap-5">
+            
+            <!-- INSTITUTIONAL AIP BADGE CARD -->
+            <div class="bg-gradient-to-br from-red-900 via-red-950 to-slate-900 text-white rounded-3xl p-5 shadow-lg border border-red-800 relative overflow-hidden">
+                <!-- Background Seal Watermark -->
+                <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl font-title pointer-events-none">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-amber-400 text-xl border border-white/20">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-title font-bold text-sm text-white leading-tight">
+                            I.E. N° 0148 "M.V.R.H.T."
+                        </h3>
+                        <p class="text-[11px] text-red-200 font-semibold">
+                            Aula de Innovación Pedagógica - 2026
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-xs text-red-100 leading-relaxed mb-3">
+                    <p class="font-semibold text-amber-300 mb-1 flex items-center gap-1">
+                        <i class="fa-solid fa-lightbulb"></i> Propósito de Aprendizaje:
+                    </p>
+                    <p id="cneb-competencia-text">
+                        Desarrollar la comprensión lectora, identificación de estructura narrativa, análisis lexico-etimológico y figuras literarias en la narrativa peruana.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] text-red-300 font-bold border-t border-white/10 pt-2">
+                    <span>Nivel: Secundaria</span>
+                    <span>S.J.L. - UGEL 05</span>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE HIGHLIGHTER TOOL -->
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 transition-colors">
+                <h3 class="font-title font-bold text-slate-900 dark:text-white text-base flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-highlighter text-red-600"></i> Resaltador Interactivo
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                    Elige un color de plumón y selecciona el texto de la lectura para marcar tus apuntes:
+                </p>
+                
+                <div class="grid grid-cols-3 gap-2 mb-3">
+                    <button onclick="setHighlighter('yellow')" id="hl-btn-yellow" class="hl-picker-btn flex flex-col items-center justify-center p-2 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 text-xs font-bold transition hover:scale-105 shadow-sm">
+                        <span class="w-4 h-4 rounded-full bg-yellow-300 border border-yellow-500 mb-1"></span>
+                        Idea Principal
+                    </button>
+                    <button onclick="setHighlighter('green')" id="hl-btn-green" class="hl-picker-btn flex flex-col items-center justify-center p-2 rounded-2xl border border-slate-200 bg-emerald-50 text-emerald-950 text-xs font-bold transition hover:scale-105">
+                        <span class="w-4 h-4 rounded-full bg-emerald-300 border border-emerald-500 mb-1"></span>
+                        Vocabulario
+                    </button>
+                    <button onclick="setHighlighter('blue')" id="hl-btn-blue" class="hl-picker-btn flex flex-col items-center justify-center p-2 rounded-2xl border border-slate-200 bg-sky-50 text-sky-950 text-xs font-bold transition hover:scale-105">
+                        <span class="w-4 h-4 rounded-full bg-sky-300 border border-sky-500 mb-1"></span>
+                        Pregunta / Duda
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <span id="active-tool-indicator" class="text-xs font-semibold text-red-700 dark:text-red-400">Modo: Desactivado</span>
+                    <button onclick="clearHighlights()" class="text-xs text-slate-500 hover:text-red-600 dark:text-slate-400 font-bold underline transition">
+                        <i class="fa-solid fa-eraser mr-1"></i> Borrar marcas
+                    </button>
+                </div>
+            </div>
+
+            <!-- GLOSSARY HELP CARD -->
+            <div class="bg-amber-50/90 dark:bg-slate-900/90 rounded-3xl p-4 border border-amber-200 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200 flex items-start gap-3">
+                <div class="p-2.5 rounded-2xl bg-amber-200 dark:bg-amber-900/60 text-amber-900 dark:text-amber-300 text-xl shrink-0">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                    <h5 class="font-bold font-title mb-1 text-amber-950 dark:text-amber-300 text-sm">Palabras Interactivas</h5>
+                    <p class="leading-relaxed">
+                        Las palabras resaltadas con <span class="glossary-term">subrayado punteado</span> contienen su origen, significado y audio de pronunciación. ¡Haz clic en ellas mientras lees!
+                    </p>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- RIGHT AREA: STORY READER & DYNAMIC ACTIVITIES -->
+        <section class="lg:col-span-8 flex flex-col gap-6">
+
+            <!-- MAIN STORY CARD -->
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow-lg border border-slate-200 dark:border-slate-800 relative transition-colors">
+                
+                <!-- Chapter Top Badge -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <span id="chapter-badge" class="px-3.5 py-1 rounded-full bg-red-600 text-white font-title text-xs font-bold tracking-wide uppercase shadow-sm">
+                        Capítulo 1: La Costa de Chan Chan
+                    </span>
+                    
+                    <button onclick="readAloudCurrentChapter()" class="text-xs font-bold text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-950/60 px-3 py-1.5 rounded-xl border border-red-200 dark:border-red-800 flex items-center gap-1.5 hover:bg-red-100 transition">
+                        <i class="fa-solid fa-volume-high text-red-600"></i> Escuchar Lectura Audio
+                    </button>
+                </div>
+
+                <!-- Story Title -->
+                <h2 id="story-title" class="font-serif text-2xl md:text-3xl font-bold text-slate-900 dark:text-amber-400 mb-4 leading-tight">
+                    El Secreto del Quipu Costero
+                </h2>
+
+                <!-- Story Content Area -->
+                <div id="story-reader-content" class="text-slate-800 dark:text-slate-200 leading-relaxed font-sans space-y-4 text-base md:text-lg transition-all">
+                    <!-- Dynamic Chapter Text Injected Here -->
+                </div>
+
+                <!-- Interaction Prompt Footer -->
+                <div class="mt-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                    <div class="text-xs text-slate-600 dark:text-slate-300 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-hand-pointer text-red-600 text-sm"></i>
+                        <span>Resalta el texto o pulsa las palabras marcadas para aprender su significado.</span>
+                    </div>
+                    <button onclick="scrollToExercise()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 text-white font-title font-bold text-xs shadow-md hover:brightness-110 transition flex items-center gap-2">
+                        <span>Ir a los Ejercicios</span>
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- DYNAMIC EXERCISES SECTION -->
+            <div id="exercise-section" class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 dark:border-slate-800 transition-colors">
+                
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-950/80 text-red-700 dark:text-red-300 flex items-center justify-center font-bold text-xl border border-red-200 dark:border-red-800">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-title text-xl font-bold text-slate-900 dark:text-white">Desafíos de Comunicación</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold">Responde las preguntas y completa las dinámicas de la I.E. N° 0148</p>
+                    </div>
+                </div>
+
+                <!-- EXERCISE CONTAINER -->
+                <div id="exercise-container">
+                    <!-- Dynamic Exercise Content injected here -->
+                </div>
+
+                <!-- CHAPTER NAVIGATION BUTTONS -->
+                <div class="mt-8 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <button id="prev-chap-btn" onclick="navigateChapter(-1)" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+                    </button>
+                    
+                    <button id="next-chap-btn" onclick="navigateChapter(1)" class="px-5 py-2.5 rounded-xl bg-red-600 text-white font-title font-bold text-xs hover:bg-red-700 shadow-md transition flex items-center gap-2">
+                        <span>Siguiente Capítulo</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 bg-slate-900 text-slate-400 border-t border-slate-800 py-6 text-center text-xs">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center gap-2">
+            <div class="flex items-center gap-2 text-amber-400 font-title font-bold text-sm">
+                <i class="fa-solid fa-school text-red-500"></i> I.E. N° 0148 Maestro Víctor Raúl Haya de la Torre
+            </div>
+            <p class="text-slate-400">San Juan de Lurigancho (S.J.L.) • Aula de Innovación Pedagógica (AIP) • Nivel Secundaria 2026</p>
+            <p class="text-slate-500 text-[11px]">Material Educativo Interactivo para el Área de Lenguaje y Comunicación</p>
+        </div>
+    </footer>
+
+
+    <!-- MODAL 1: GLOSSARY POPUP -->
+    <div id="glossary-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-amber-400 relative transition-colors">
+            
+            <button onclick="closeGlossaryModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-2 mb-2">
+                <span class="px-3 py-1 rounded-full bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 font-title font-bold text-xs uppercase border border-red-200 dark:border-red-800">
+                    Glosario Peruano
+                </span>
+            </div>
+
+            <div class="flex items-center justify-between mb-2">
+                <h3 id="g-modal-word" class="font-serif text-3xl font-bold text-slate-900 dark:text-amber-400">
+                    Totora
+                </h3>
+                <button onclick="speakWord()" class="w-10 h-10 rounded-2xl bg-red-600 text-white shadow-md hover:bg-red-700 flex items-center justify-center text-lg transition" title="Escuchar pronunciación">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+
+            <p id="g-modal-origin" class="text-xs text-amber-700 dark:text-amber-400 italic font-semibold mb-3">
+                Origen: Quechua (t'utura)
+            </p>
+
+            <div class="space-y-3 bg-amber-50/80 dark:bg-slate-800 p-4 rounded-2xl border border-amber-200 dark:border-slate-700 text-sm">
+                <div>
+                    <strong class="text-amber-950 dark:text-amber-300 block font-title text-xs uppercase tracking-wider mb-0.5">Definición:</strong>
+                    <p id="g-modal-def" class="text-slate-800 dark:text-slate-200 leading-relaxed text-xs sm:text-sm">
+                        Planta acuática milenaria usada en la costa y sierra para confeccionar embarcaciones tradicionales.
+                    </p>
+                </div>
+                <div>
+                    <strong class="text-amber-950 dark:text-amber-300 block font-title text-xs uppercase tracking-wider mb-0.5">Sinónimos:</strong>
+                    <p id="g-modal-syn" class="text-slate-600 dark:text-slate-400 italic text-xs">
+                        Junco, caña acuática.
+                    </p>
+                </div>
+                <div>
+                    <strong class="text-amber-950 dark:text-amber-300 block font-title text-xs uppercase tracking-wider mb-0.5">Uso en la lectura:</strong>
+                    <p id="g-modal-example" class="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-amber-200 dark:border-slate-700 italic text-xs">
+                        "El pescador deslizaba su nave entre las olas."
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <button onclick="closeGlossaryModal()" class="w-full py-2.5 rounded-xl bg-red-600 text-white font-title font-bold text-xs hover:bg-red-700 shadow-md transition">
+                    ¡Comprendido! Continuar leyendo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PRINTABLE DIPLOMA / CERTIFICATE OF ACHIEVEMENT -->
+    <div id="certificate-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 shadow-2xl border-4 border-amber-400 relative my-8">
+            
+            <!-- Close Modal -->
+            <button onclick="closeCertificateModal()" class="no-print absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- PRINTABLE CERTIFICATE CONTAINER -->
+            <div id="printable-certificate-container" class="bg-amber-50/90 p-6 md:p-10 rounded-2xl border-2 border-amber-300 text-center relative overflow-hidden">
+                <div class="ie-top-bar absolute top-0 left-0 right-0"></div>
+                
+                <!-- School Emblem Header -->
+                <div class="flex justify-center mb-3 mt-2">
+                    <div class="w-20 h-24">
+                        <svg viewBox="0 0 200 240" class="w-full h-full drop-shadow">
+                            <path d="M 10 10 L 190 10 L 190 140 C 190 190 100 230 100 230 C 100 230 10 190 10 140 Z" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="4"/>
+                            <rect x="20" y="20" width="53" height="30" fill="#C8102E"/>
+                            <rect x="73" y="20" width="54" height="30" fill="#FFFFFF"/>
+                            <rect x="127" y="20" width="53" height="30" fill="#C8102E"/>
+                            <text x="46" y="42" font-family="Fredoka, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" text-anchor="middle">I</text>
+                            <text x="153" y="42" font-family="Fredoka, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" text-anchor="middle">E</text>
+                            <path d="M 20 53 L 180 53 L 180 135 C 180 178 100 215 100 215 C 100 215 20 178 20 135 Z" fill="#C8102E"/>
+                            <path id="arc-path-cert" d="M 40 85 Q 100 60 160 85" fill="none"/>
+                            <text font-family="Fredoka, sans-serif" font-weight="900" font-size="20" fill="#000000">
+                                <textPath href="#arc-path-cert" startOffset="50%" text-anchor="middle">MVRHT</textPath>
+                            </text>
+                            <path d="M 85 85 C 95 80 115 85 125 95 C 130 110 120 120 125 135 C 115 150 105 155 95 150 C 85 140 75 115 85 85 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+                            <text x="102" y="105" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">1</text>
+                            <text x="102" y="123" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">4</text>
+                            <text x="102" y="141" font-family="Fredoka, sans-serif" font-weight="900" font-size="16" fill="#000" text-anchor="middle">8</text>
+                            <path d="M 35 140 C 35 170 70 190 100 195 C 130 190 165 170 165 140" fill="none" stroke="#15803D" stroke-width="7" stroke-linecap="round"/>
+                            <text x="100" y="185" font-family="Fredoka, sans-serif" font-weight="900" font-size="14" fill="#FFFFFF" text-anchor="middle">S.J.L.</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <h4 class="text-xs font-bold text-red-800 uppercase tracking-widest font-title">
+                        I.E. N° 0148 MAESTRO VÍCTOR RAÚL HAYA DE LA TORRE
+                    </h4>
+                    <p class="text-[11px] font-semibold text-slate-600">San Juan de Lurigancho • Aula de Innovación Pedagógica - Nivel Secundaria 2026</p>
+                </div>
+
+                <h2 class="font-serif text-2xl md:text-4xl font-bold text-slate-900 my-2">
+                    Diploma de Honor en Comunicación
+                </h2>
+                
+                <p class="text-slate-700 font-title text-sm mb-4">
+                    Otorgado con orgullo al/a la estudiante:
+                </p>
+
+                <!-- Student Name Input -->
+                <div class="max-w-md mx-auto mb-5">
+                    <input type="text" id="student-name-input" placeholder="Escribe tu Nombre y Apellidos aquí" class="w-full text-center text-xl md:text-2xl font-serif font-bold text-red-900 bg-white border-2 border-amber-400 rounded-2xl px-4 py-2 focus:outline-none focus:border-red-600 shadow-inner">
+                </div>
+
+                <p class="text-slate-700 text-xs md:text-sm max-w-lg mx-auto leading-relaxed mb-6">
+                    Por culminar satisfactoriamente el recorrido interactivo de comprensión lectora, vocabulario regional y análisis de figuras literarias en el Storybook Digital <b>"El Misterio del Quipu Mágico"</b>.
+                </p>
+
+                <!-- Stats Badges -->
+                <div class="flex items-center justify-center gap-6 my-4 border-t border-b border-amber-300 py-3 text-slate-800">
+                    <div>
+                        <span class="block text-[10px] font-bold text-amber-900 uppercase">Capítulos</span>
+                        <span class="font-title text-lg font-bold text-slate-900">3 / 3</span>
+                    </div>
+                    <div class="h-8 w-px bg-amber-300"></div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-amber-900 uppercase">Estrellas</span>
+                        <span class="font-title text-lg font-bold text-amber-600 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-star"></i> <span id="cert-stars">0</span>
+                        </span>
+                    </div>
+                    <div class="h-8 w-px bg-amber-300"></div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-amber-900 uppercase">AIP Nivel</span>
+                        <span class="font-title text-xs font-bold text-emerald-800">Secundaria 2026</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-around pt-4">
+                    <div class="text-center">
+                        <div class="w-12 h-12 mx-auto mb-1 rounded-full bg-red-700 text-white flex items-center justify-center text-xl shadow">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-800 uppercase block">Docente de Comunicación</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 mx-auto mb-1 rounded-full bg-amber-600 text-white flex items-center justify-center text-xl shadow">
+                            <i class="fa-solid fa-laptop"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-800 uppercase block">Coordinación AIP</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Actions Buttons -->
+            <div class="no-print mt-6 flex items-center justify-between gap-4">
+                <button onclick="closeCertificateModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200">
+                    Volver al Libro
+                </button>
+                <button onclick="window.print()" class="px-6 py-2.5 rounded-xl bg-red-600 text-white font-title font-bold text-xs hover:bg-red-700 shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-print"></i> Imprimir mi Diploma
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        /* ==========================================================================
+           DATABASE: GLOSSARY TERMS & CHAPTERS
+           ========================================================================== */
+        
+        const GLOSSARY_DB = {
+            "totora": {
+                word: "Totora",
+                origin: "Del quechua t'utura",
+                def: "Planta acuática de tallos largos y flexibles originaria de zonas pantanosas. Empleada desde la época preincaica para construir caballitos de totora y embarcaciones.",
+                syn: "Junco acuático, caña de laguna.",
+                example: "El pescador navegaba seguro sobre su tradicional caballito de totora en Trujillo."
+            },
+            "quipu": {
+                word: "Quipu",
+                origin: "Del quechua khipu (nudo)",
+                def: "Sistema mnemotécnico incaico de cuerdas de algodón o lana con nudos de variados colores, usado para llevar contabilidad y transmitir historias.",
+                syn: "Cordel de registros, contabilidad inca.",
+                example: "El quipu de cuerdas rojas conservaba la memoria histórica de la comunidad."
+            },
+            "chanchan": {
+                word: "Chan Chan",
+                origin: "Del idioma Mochica (Jang-Jang: Sol-Sol)",
+                def: "Ciudadela de adobe más grande de América precolombina, capital del antiguo reino Chimú en la costa norte del Perú.",
+                syn: "Ciudadela de barro, patrimonio Chimú.",
+                example: "Los muros labrados de Chan Chan resisten el paso de los siglos."
+            },
+            "ancestral": {
+                word: "Ancestral",
+                origin: "Relativo a los antepasados",
+                def: "Que procede de los antepasados lejanos y conserva una profunda tradición cultural o espiritual.",
+                syn: "Milenario, tradicional, hereditario.",
+                example: "Guardaban un respeto ancestral por la sabiduría de los abuelos."
+            },
+            "apu": {
+                word: "Apu",
+                origin: "Del quechua apu (Señor sagrado)",
+                def: "Montaña o cumbre elevada venerada en la cosmovisión andina como un espíritu protector de los pueblos.",
+                syn: "Montaña tutelar, cumbre sagrada.",
+                example: "El Apu Ausangate destacaba imponente sobre los valles nevados."
+            },
+            "pachamama": {
+                word: "Pachamama",
+                origin: "Del quechua pacha (mundo) y mama (madre)",
+                def: "Madre Tierra. Deidad andina que representa la naturaleza, la fertilidad, los frutos y el sustento vital.",
+                syn: "Madre Naturaleza, tierra sagrada.",
+                example: "Ofrecieron flores a la Pachamama en gratitud por la buena cosecha."
+            },
+            "majestuoso": {
+                word: "Majestuoso",
+                origin: "Derivado de majestad",
+                def: "Que posee grandeza, elegancia y solemnidad, provocando admiración.",
+                syn: "Imponente, grandioso, sublime.",
+                example: "El vuelo del cóndor sobre el cañón era un espectáculo majestuoso."
+            },
+            "biodiversidad": {
+                word: "Biodiversidad",
+                origin: "Del griego bios (vida) y diversidad",
+                def: "Variedad y riqueza de seres vivos (plantas, animales, microorganismos) presentes en un ecosistema.",
+                syn: "Variedad biológica, riqueza natural.",
+                example: "La selva amazónica alberga una biodiversidad única en el planeta."
+            },
+            "susurro": {
+                word: "Susurro",
+                origin: "Onomatopéyico",
+                def: "Sonido suave, apacible y murmurante producido por la brisa, el agua o las voces bajas.",
+                syn: "Murmullo, rumor, brisa suave.",
+                example: "El susurro del río calmaba el atardecer en la Amazonía."
+            }
+        };
+
+        const CHAPTERS = [
+            {
+                id: 1,
+                region: "Costa",
+                title: "El Secreto del Quipu Costero",
+                badge: "Capítulo 1: La Costa de Chan Chan",
+                cnebFocus: "Competencia: Lee diversos tipos de textos. Desempeño: Identifica la estructura narrativa (Inicio, Nudo, Desenlace) e infiere el conflicto central en el texto.",
+                content: `
+                    <p class="mb-4">
+                        <span class="dropcap text-4xl font-serif font-bold text-red-700 dark:text-red-400 float-left mr-2 leading-none">C</span>aminando entre las impresionantes ruinas de <span class="glossary-term" onclick="openGlossary('chanchan')">chanchan</span>, cerca del mar de Trujillo, los estudiantes Valeria y Mateo encontraron una pequeña caja de madera labrada. En su interior reposaba un <span class="glossary-term" onclick="openGlossary('quipu')">quipu</span> amarillento tejido con hebras de algodón.
+                    </p>
+                    <p class="mb-4">
+                        De pronto, un pescador veterano que cargaba su <span class="glossary-term" onclick="openGlossary('totora')">totora</span> caballito se acercó con una sonrisa amable: <em>"—Ese quipu perteneció a los antiguos navegantes Chimú. Para descifrar su primer secreto, deben identificar cómo inicia esta historia y qué desafío se presenta"</em>.
+                    </p>
+                    <p class="mb-4">
+                        Valeria tomó su libreta de notas para registrar los detalles. Comprendió que la tradición <span class="glossary-term" onclick="openGlossary('ancestral')">ancestral</span> de la costa peruana demandaba atención, análisis y trabajo en equipo.
+                    </p>
+                `,
+                quiz: {
+                    question: "¿Cuál es el conflicto o Nudo principal que da inicio a la aventura narrativa?",
+                    options: [
+                        "El pescador pierde su caballito de totora en el mar.",
+                        "Los estudiantes hallan un quipu antiguo y deben resolver el enigma de su mensaje.",
+                        "Valeria y Mateo deciden regresar a Lima inmediatamente.",
+                        "Las ruinas de Chan Chan sufren por la lluvia."
+                    ],
+                    correct: 1,
+                    explanation: "¡Correcto! El nudo desencadenante ocurre cuando descubren el quipu y reciben el reto de descifrar su mensaje ancestral."
+                }
+            },
+            {
+                id: 2,
+                region: "Sierra",
+                title: "La Leyenda de la Cumbre Sagrada",
+                badge: "Capítulo 2: El Valle Sagrado",
+                cnebFocus: "Competencia: Infiere e interpreta información. Desempeño: Deduce el significado de palabras por su contexto, identificando sinónimos y etimología andina.",
+                content: `
+                    <p class="mb-4">
+                        <span class="dropcap text-4xl font-serif font-bold text-red-700 dark:text-red-400 float-left mr-2 leading-none">E</span>l viaje continuó rumbo a los andes del Cusco. Guiados por los nudos del quipu, los estudiantes subieron por un sendero serpenteante en el Valle Sagrado. La niebla del amanecer rozaba las laderas llenas de andenes agrícolas.
+                    </p>
+                    <p class="mb-4">
+                        En lo alto se alzaba el <span class="glossary-term" onclick="openGlossary('apu')">apu</span> Ausangate, una cumbre <span class="glossary-term" onclick="openGlossary('majestuoso')">majestuoso</span> vestida de nieve perpetua. La comunidad rendía tributo a la <span class="glossary-term" onclick="openGlossary('pachamama')">pachamama</span> expresando gratitud por el agua y las cosechas.
+                    </p>
+                    <p class="mb-4">
+                        Mateo anotó nuevas palabras en su glosario: entendió que la lengua quechua expresa un profundo respeto y armonía con la naturaleza.
+                    </p>
+                `,
+                quiz: {
+                    question: "¿Qué sinónimo reemplaza adecuadamente a la palabra 'MAJESTUOSO' usada en el texto?",
+                    options: [
+                        "Insignificante y pequeño",
+                        "Imponente y grandioso",
+                        "Silencioso y oculto",
+                        "Pasajero y frágil"
+                    ],
+                    correct: 1,
+                    explanation: "¡Excelente! 'Imponente y grandioso' es el sinónimo preciso para describir la solemnidad del Apu."
+                }
+            },
+            {
+                id: 3,
+                region: "Selva",
+                title: "El Canto de la Amazonía",
+                badge: "Capítulo 3: La Amazonía Fascinante",
+                cnebFocus: "Competencia: Reflexiona sobre la forma y contenido. Desempeño: Identifica figuras literarias (metáfora, personificación, onomatopeya) en la lectura.",
+                content: `
+                    <p class="mb-4">
+                        <span class="dropcap text-4xl font-serif font-bold text-red-700 dark:text-red-400 float-left mr-2 leading-none">F</span>inalmente, los jóvenes llegaron a la selva del río Amazonas. La inmensa <span class="glossary-term" onclick="openGlossary('biodiversidad')">biodiversidad</span> los rodeaba con tonos verdes resplandecientes y sonidos exóticos.
+                    </p>
+                    <p class="mb-4">
+                        Valeria miró las aguas del río y exclamó: <em>"—<strong>El río es una serpiente plateada que navega entre los árboles</strong>"</em>. A lo lejos, el suave <span class="glossary-term" onclick="openGlossary('susurro')">susurro</span> del viento <strong>parecía murmurar canciones antiguas</strong> a las palmeras.
+                    </p>
+                    <p class="mb-4">
+                        De pronto, un estridente <em>¡Cua, cua, cua!</em> de los guacamayos hizo sonreír a todos. El quipu se iluminó al completar su travesía por el Perú: Costa, Sierra y Selva unidas por la comunicación.
+                    </p>
+                `,
+                quiz: {
+                    question: "En la expresión 'El río es una serpiente plateada', ¿qué figura literaria se está empleando?",
+                    options: [
+                        "Onomatopeya (imitación de sonido)",
+                        "Metáfora (comparación directa e imaginativa)",
+                        "Pregunta retórica",
+                        "Hipérbole exagerada"
+                    ],
+                    correct: 1,
+                    explanation: "¡Correcto! Es una Metáfora porque asimila directamente la forma y brillo del río con una serpiente plateada."
+                }
+            }
+        ];
+
+        /* ==========================================================================
+           STATE MANAGEMENT & AUDIO
+           ========================================================================== */
+        let currentChapterIndex = 0;
+        let starPoints = 0;
+        let currentHighlighter = null; // 'yellow' | 'green' | 'blue' | null
+        let soundEnabled = true;
+        let fontSize = 16;
+        let isDarkMode = false;
+
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(450, now);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'correct') {
+                    // Arpeggio
+                    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+                        const noteOsc = audioCtx.createOscillator();
+                        const noteGain = audioCtx.createGain();
+                        noteOsc.connect(noteGain);
+                        noteGain.connect(audioCtx.destination);
+                        noteOsc.type = 'triangle';
+                        noteOsc.frequency.setValueAtTime(freq, now + idx * 0.07);
+                        noteGain.gain.setValueAtTime(0.12, now + idx * 0.07);
+                        noteGain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.07 + 0.18);
+                        noteOsc.start(now + idx * 0.07);
+                        noteOsc.stop(now + idx * 0.07 + 0.18);
+                    });
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.linearRampToValueAtTime(140, now + 0.2);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'pop') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(550, now);
+                    osc.frequency.exponentialRampToValueAtTime(750, now + 0.07);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.07);
+                    osc.start(now);
+                    osc.stop(now + 0.07);
+                }
+            } catch (e) {
+                console.log("SFX error", e);
+            }
+        }
+
+        /* ==========================================================================
+           DOM INITIALIZATION & RENDER
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            renderChapter(0);
+            setupHighlighterListener();
+        });
+
+        function renderChapter(index) {
+            currentChapterIndex = index;
+            const chap = CHAPTERS[index];
+
+            // Navbar Buttons Update
+            for (let i = 0; i < 3; i++) {
+                const btn = document.getElementById(`nav-chap-${i}`);
+                if (i === index) {
+                    btn.className = "chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-600 text-white shadow-md transition scale-105 font-bold";
+                } else {
+                    btn.className = "chap-nav-btn flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-red-200 transition font-bold";
+                }
+            }
+
+            // Update CNEB sidebar text
+            document.getElementById('cneb-competencia-text').innerText = chap.cnebFocus;
+
+            // Chapter Badge & Story Title
+            document.getElementById('chapter-badge').innerText = chap.badge;
+            document.getElementById('story-title').innerText = chap.title;
+
+            // Render Text Content
+            const storyElem = document.getElementById('story-reader-content');
+            storyElem.innerHTML = chap.content;
+            storyElem.style.fontSize = `${fontSize}px`;
+
+            // Render Exercise
+            renderExercise(chap);
+
+            // Update Prev/Next Controls
+            document.getElementById('prev-chap-btn').disabled = (index === 0);
+            const nextBtn = document.getElementById('next-chap-btn');
+            if (index === CHAPTERS.length - 1) {
+                nextBtn.innerHTML = `<span>Ver Diploma AIP</span> <i class="fa-solid fa-award"></i>`;
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-title font-bold text-xs hover:bg-emerald-700 shadow-md transition flex items-center gap-2";
+            } else {
+                nextBtn.innerHTML = `<span>Siguiente Capítulo</span> <i class="fa-solid fa-chevron-right"></i>`;
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-red-600 text-white font-title font-bold text-xs hover:bg-red-700 shadow-md transition flex items-center gap-2";
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchChapter(idx) {
+            playSound('click');
+            renderChapter(idx);
+        }
+
+        function navigateChapter(delta) {
+            playSound('click');
+            const newIndex = currentChapterIndex + delta;
+            if (newIndex >= 0 && newIndex < CHAPTERS.length) {
+                renderChapter(newIndex);
+            } else if (newIndex >= CHAPTERS.length) {
+                openCertificate();
+            }
+        }
+
+        /* ==========================================================================
+           GLOSSARY MODAL & TTS
+           ========================================================================== */
+        let currentModalWord = "";
+
+        function openGlossary(key) {
+            playSound('pop');
+            const data = GLOSSARY_DB[key];
+            if (!data) return;
+
+            currentModalWord = data.word;
+            document.getElementById('g-modal-word').innerText = data.word;
+            document.getElementById('g-modal-origin').innerText = data.origin;
+            document.getElementById('g-modal-def').innerText = data.def;
+            document.getElementById('g-modal-syn').innerText = data.syn;
+            document.getElementById('g-modal-example').innerText = `"${data.example}"`;
+
+            document.getElementById('glossary-modal').classList.remove('hidden');
+        }
+
+        function closeGlossaryModal() {
+            playSound('click');
+            document.getElementById('glossary-modal').classList.add('hidden');
+        }
+
+        function speakWord() {
+            if ('speechSynthesis' in window && currentModalWord) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(currentModalWord);
+                utterance.lang = 'es-PE';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function readAloudCurrentChapter() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const container = document.getElementById('story-reader-content');
+                const textToRead = container.innerText;
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'es-PE';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ==========================================================================
+           HIGHLIGHTER LOGIC
+           ========================================================================== */
+        function setHighlighter(color) {
+            playSound('click');
+            ['yellow', 'green', 'blue'].forEach(c => {
+                const btn = document.getElementById(`hl-btn-${c}`);
+                if (c === color && currentHighlighter !== color) {
+                    btn.classList.add('ring-2', 'ring-red-600', 'scale-105');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-red-600', 'scale-105');
+                }
+            });
+
+            if (currentHighlighter === color) {
+                currentHighlighter = null;
+                document.getElementById('active-tool-indicator').innerText = "Modo: Desactivado";
+            } else {
+                currentHighlighter = color;
+                const labels = { yellow: 'Idea Principal', green: 'Vocabulario', blue: 'Pregunta/Duda' };
+                document.getElementById('active-tool-indicator').innerText = `Modo: Plumón ${labels[color]}`;
+            }
+        }
+
+        function setupHighlighterListener() {
+            const storyElem = document.getElementById('story-reader-content');
+            storyElem.addEventListener('mouseup', handleTextSelection);
+            storyElem.addEventListener('touchend', handleTextSelection);
+        }
+
+        function handleTextSelection() {
+            if (!currentHighlighter) return;
+
+            const selection = window.getSelection();
+            if (!selection.rangeCount || selection.isCollapsed) return;
+
+            const range = selection.getRangeAt(0);
+            const selectedText = range.toString().trim();
+            if (selectedText.length === 0) return;
+
+            const mark = document.createElement('mark');
+            mark.className = `hl-${currentHighlighter} cursor-pointer transition-colors`;
+            mark.title = "Haz clic para borrar el resaltado";
+            mark.onclick = function(e) {
+                e.stopPropagation();
+                const textNode = document.createTextNode(this.innerText);
+                this.parentNode.replaceChild(textNode, this);
+            };
+
+            try {
+                range.surroundContents(mark);
+                selection.removeAllRanges();
+                playSound('pop');
+            } catch(err) {
+                console.log("Cross node selection", err);
+            }
+        }
+
+        function clearHighlights() {
+            playSound('click');
+            const storyElem = document.getElementById('story-reader-content');
+            const marks = storyElem.querySelectorAll('mark');
+            marks.forEach(m => {
+                const textNode = document.createTextNode(m.innerText);
+                m.parentNode.replaceChild(textNode, m);
+            });
+        }
+
+        /* ==========================================================================
+           EXERCISES ENGINE
+           ========================================================================== */
+        function renderExercise(chap) {
+            const container = document.getElementById('exercise-container');
+            container.innerHTML = '';
+
+            // 1. Multiple Choice Quiz Card
+            const quizCard = document.createElement('div');
+            quizCard.className = "bg-slate-50 dark:bg-slate-800/80 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 mb-6";
+            
+            let optionsHTML = chap.quiz.options.map((opt, i) => `
+                <button onclick="checkQuizAnswer(${i}, ${chap.quiz.correct}, this)" class="quiz-opt-btn w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-red-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-xs md:text-sm transition flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/60 text-red-800 dark:text-red-200 font-title font-bold flex items-center justify-center text-xs shrink-0">${String.fromCharCode(65 + i)}</span>
+                    <span class="pt-0.5">${opt}</span>
+                </button>
+            `).join('');
+
+            quizCard.innerHTML = `
+                <div class="flex items-center gap-2 text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wide mb-2">
+                    <i class="fa-solid fa-circle-question text-red-600"></i> Comprensión Lectora CNEB
+                </div>
+                <h4 class="font-title font-bold text-slate-900 dark:text-amber-400 text-base md:text-lg mb-4">${chap.quiz.question}</h4>
+                <div class="space-y-2.5">${optionsHTML}</div>
+                <div id="quiz-feedback" class="mt-4 p-3 rounded-xl hidden text-xs md:text-sm font-semibold"></div>
+            `;
+            container.appendChild(quizCard);
+
+            // 2. Interactive Activity per Chapter
+            if (chap.id === 1) {
+                renderStructureGame(container);
+            } else if (chap.id === 2) {
+                renderSynonymGame(container);
+            } else if (chap.id === 3) {
+                renderLiteraryFiguresGame(container);
+            }
+        }
+
+        function checkQuizAnswer(selected, correct, btnElem) {
+            const parent = btnElem.parentElement;
+            const buttons = parent.querySelectorAll('.quiz-opt-btn');
+            const feedback = document.getElementById('quiz-feedback');
+
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                playSound('correct');
+                btnElem.classList.remove('bg-white', 'dark:bg-slate-900');
+                btnElem.classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-400', 'text-emerald-950');
+                feedback.className = "mt-4 p-3 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 text-xs md:text-sm font-semibold block";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1.5 text-base"></i> ${CHAPTERS[currentChapterIndex].quiz.explanation}`;
+                addStars(10);
+            } else {
+                playSound('wrong');
+                btnElem.classList.remove('bg-white', 'dark:bg-slate-900');
+                btnElem.classList.add('bg-red-100', 'dark:bg-red-950', 'border-red-400', 'text-red-950', 'shake');
+                buttons[correct].classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-400');
+                feedback.className = "mt-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/80 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 text-xs md:text-sm font-semibold block";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600 mr-1.5 text-base"></i> Revisa la lectura. La respuesta correcta era la opción ${String.fromCharCode(65 + correct)}.`;
+            }
+        }
+
+        /* --- Activity 1: Estructura Narrativa --- */
+        function renderStructureGame(container) {
+            const gameCard = document.createElement('div');
+            gameCard.className = "bg-amber-50/70 dark:bg-slate-800/60 p-5 rounded-2xl border border-amber-200 dark:border-slate-700";
+            gameCard.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-title font-bold text-slate-900 dark:text-white text-sm md:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-amber-600"></i> Clasifica las Partes del Relato
+                    </h4>
+                    <span class="text-[11px] bg-amber-200 dark:bg-amber-950 text-amber-900 dark:text-amber-300 font-bold px-2 py-0.5 rounded-full">+15 Pts</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">Haz clic en el botón correcto para cada enunciado:</p>
+                
+                <div class="space-y-3 text-xs md:text-sm">
+                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <p class="mb-2 italic text-slate-700 dark:text-slate-300">"Valeria y Mateo caminaban por Chan Chan y encontraron un quipu antiguo en una caja de madera."</p>
+                        <div class="flex gap-2">
+                            <button onclick="checkTag(this, 'inicio', 'inicio')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Inicio</button>
+                            <button onclick="checkTag(this, 'inicio', 'nudo')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Nudo</button>
+                            <button onclick="checkTag(this, 'inicio', 'desenlace')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Desenlace</button>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <p class="mb-2 italic text-slate-700 dark:text-slate-300">"Un pescador les indica que para descifrar el quipu deben identificar la estructura narrativa."</p>
+                        <div class="flex gap-2">
+                            <button onclick="checkTag(this, 'nudo', 'inicio')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Inicio</button>
+                            <button onclick="checkTag(this, 'nudo', 'nudo')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Nudo</button>
+                            <button onclick="checkTag(this, 'nudo', 'desenlace')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-bold hover:bg-amber-100 dark:hover:bg-slate-800">Desenlace</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(gameCard);
+        }
+
+        function checkTag(btn, correct, selected) {
+            const group = btn.parentElement;
+            group.querySelectorAll('button').forEach(b => b.disabled = true);
+
+            if (correct === selected) {
+                playSound('correct');
+                btn.className = "px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-xs shadow-sm";
+                addStars(8);
+            } else {
+                playSound('wrong');
+                btn.className = "px-3 py-1 rounded-lg bg-red-600 text-white font-bold text-xs shake";
+            }
+        }
+
+        /* --- Activity 2: Sinónimos Peruanos --- */
+        let selectedSyn = null;
+        function renderSynonymGame(container) {
+            const gameCard = document.createElement('div');
+            gameCard.className = "bg-red-50/60 dark:bg-slate-800/60 p-5 rounded-2xl border border-red-200 dark:border-slate-700";
+            gameCard.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-title font-bold text-slate-900 dark:text-white text-sm md:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-link text-red-600"></i> Empareja Sinónimos y Léxico Andino
+                    </h4>
+                    <span class="text-[11px] bg-red-200 dark:bg-red-950 text-red-900 dark:text-red-300 font-bold px-2 py-0.5 rounded-full">+15 Pts</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">Selecciona primero la palabra andina y luego su significado o sinónimo:</p>
+                
+                <div class="grid grid-cols-2 gap-3 text-xs md:text-sm">
+                    <div class="space-y-2" id="syn-left">
+                        <button onclick="clickSynLeft(this, 'apu')" class="syn-btn w-full p-2.5 rounded-xl border border-red-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-800 dark:text-slate-200 text-left hover:bg-red-100">1. Apu</button>
+                        <button onclick="clickSynLeft(this, 'pachamama')" class="syn-btn w-full p-2.5 rounded-xl border border-red-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-800 dark:text-slate-200 text-left hover:bg-red-100">2. Pachamama</button>
+                    </div>
+                    <div class="space-y-2" id="syn-right">
+                        <button onclick="clickSynRight(this, 'pachamama')" class="syn-target-btn w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-left hover:bg-slate-100">Madre Tierra / Naturaleza</button>
+                        <button onclick="clickSynRight(this, 'apu')" class="syn-target-btn w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-left hover:bg-slate-100">Cumbre / Montaña Tutelar</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(gameCard);
+        }
+
+        function clickSynLeft(btn, key) {
+            playSound('click');
+            document.querySelectorAll('#syn-left .syn-btn').forEach(b => b.classList.remove('ring-2', 'ring-red-600', 'bg-red-100'));
+            btn.classList.add('ring-2', 'ring-red-600', 'bg-red-100');
+            selectedSyn = { key, elem: btn };
+        }
+
+        function clickSynRight(btn, targetKey) {
+            if (!selectedSyn) return;
+
+            if (selectedSyn.key === targetKey) {
+                playSound('correct');
+                selectedSyn.elem.className = "w-full p-2.5 rounded-xl bg-emerald-600 text-white font-bold text-left cursor-default";
+                btn.className = "w-full p-2.5 rounded-xl bg-emerald-600 text-white font-bold text-left cursor-default";
+                selectedSyn.elem.disabled = true;
+                btn.disabled = true;
+                selectedSyn = null;
+                addStars(8);
+            } else {
+                playSound('wrong');
+                btn.classList.add('shake');
+                setTimeout(() => btn.classList.remove('shake'), 400);
+            }
+        }
+
+        /* --- Activity 3: Figuras Literarias --- */
+        function renderLiteraryFiguresGame(container) {
+            const gameCard = document.createElement('div');
+            gameCard.className = "bg-emerald-50/60 dark:bg-slate-800/60 p-5 rounded-2xl border border-emerald-200 dark:border-slate-700";
+            gameCard.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-title font-bold text-slate-900 dark:text-white text-sm md:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i> Clasificador de Figuras Literarias
+                    </h4>
+                    <span class="text-[11px] bg-emerald-200 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full">+15 Pts</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">Identifica la figura literaria presente en cada oración del texto:</p>
+                
+                <div class="space-y-3 text-xs md:text-sm">
+                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <p class="mb-2 italic text-slate-800 dark:text-slate-200">"El susurro del viento parecía murmurar canciones antiguas."</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="checkFig(this, 'personificacion', 'metaphora')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Metáfora</button>
+                            <button onclick="checkFig(this, 'personificacion', 'personificacion')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Personificación</button>
+                            <button onclick="checkFig(this, 'personificacion', 'onomatopeya')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Onomatopeya</button>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <p class="mb-2 italic text-slate-800 dark:text-slate-200">"¡Cua, cua, cua! retumbaba entre los grandes árboles."</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="checkFig(this, 'onomatopeya', 'metaphora')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Metáfora</button>
+                            <button onclick="checkFig(this, 'onomatopeya', 'personificacion')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Personificación</button>
+                            <button onclick="checkFig(this, 'onomatopeya', 'onomatopeya')" class="px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-emerald-100 dark:hover:bg-slate-800">Onomatopeya</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(gameCard);
+        }
+
+        function checkFig(btn, correct, selected) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => b.disabled = true);
+
+            if (correct === selected) {
+                playSound('correct');
+                btn.className = "px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold shadow-sm";
+                addStars(8);
+            } else {
+                playSound('wrong');
+                btn.className = "px-3 py-1 rounded-lg bg-red-600 text-white font-bold shake";
+            }
+        }
+
+        /* ==========================================================================
+           UTILITY & CERTIFICATE FUNCTIONS
+           ========================================================================== */
+        function addStars(pts) {
+            starPoints += pts;
+            document.getElementById('star-counter').innerText = starPoints;
+            document.getElementById('cert-stars').innerText = starPoints;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-btn');
+            btn.innerHTML = soundEnabled ? '<i class="fa-solid fa-volume-high text-sm"></i>' : '<i class="fa-solid fa-volume-xmark text-sm"></i>';
+            btn.className = soundEnabled 
+                ? "w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-red-100 transition" 
+                : "w-9 h-9 rounded-xl bg-red-100 text-red-600 border border-red-300 flex items-center justify-center transition";
+        }
+
+        function toggleDarkMode() {
+            playSound('click');
+            isDarkMode = !isDarkMode;
+            const html = document.documentElement;
+            const body = document.getElementById('app-body');
+            const themeBtn = document.getElementById('theme-btn');
+
+            if (isDarkMode) {
+                html.classList.add('dark');
+                body.className = "bg-pattern-dark text-slate-100 min-h-screen flex flex-col font-sans selection:bg-red-900 selection:text-red-100";
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun text-amber-400 text-sm"></i>';
+            } else {
+                html.classList.remove('dark');
+                body.className = "bg-pattern-light text-slate-800 min-h-screen flex flex-col font-sans selection:bg-red-200 selection:text-red-900";
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon text-sm"></i>';
+            }
+        }
+
+        function changeFontSize(delta) {
+            fontSize = Math.min(Math.max(fontSize + delta, 14), 22);
+            document.getElementById('story-reader-content').style.fontSize = `${fontSize}px`;
+        }
+
+        function scrollToExercise() {
+            playSound('click');
+            document.getElementById('exercise-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openCertificate() {
+            playSound('correct');
+            document.getElementById('certificate-modal').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            playSound('click');
+            document.getElementById('certificate-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
